@@ -60,6 +60,8 @@ const App = () => {
     } catch (error) {
       console.error("Coversion error:", error);
       setFeedback(`❌ Error:${error.message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,8 +72,13 @@ const App = () => {
   };
   const handleCopy = async () => {
     if (outputCode) {
-      await navigator.clipboard.writeText(outputCode);
-      setFeedback("📋 Code copied to clipboard!");
+      try {
+        await navigator.clipboard.writeText(outputCode);
+        setFeedback("📋 Code copied to clipboard!");
+      } catch (error) {
+        setFeedback("❌ Failed to copy code.");
+        console.error(error);
+      }
     }
   };
   return (
