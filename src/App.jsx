@@ -56,10 +56,9 @@ const App = () => {
             "";
       if (!reply.trim()) throw new Error("Empty Response from Ai");
       const cleanCode = reply
-        .replace(/^```[\w-]*\n?/i, "")
-        .replace(/\n?```$/i, "")
+        .replace(/^\s*```[\w-]*\s*\n?/i, "")
+        .replace(/\n?\s*```\s*$/i, "")
         .trim();
-
       setOutputCode(cleanCode);
       setFeedback("✔ Conversion successful!");
     } catch (error) {
@@ -113,7 +112,7 @@ const App = () => {
           ) : (
             <Play className="w-5 h-5 " />
           )}
-          {loading ? "Converting..." : "Converte"}
+          {loading ? "Converting..." : "Convert"}
         </button>
         <button
           onClick={handleReset}
@@ -149,6 +148,8 @@ const App = () => {
               onClick={handleCopy}
               disabled={!outputCode}
               className="flex items-center gap-1 text-sm px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white rounded-lg disabled:opacity-50"
+              aria-label="Copy converted code"
+              title="Copy converted code"
             >
               <Clipboard className="w-4 h-4" />
             </button>
